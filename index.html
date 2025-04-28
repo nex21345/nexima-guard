@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexima Guard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        #status {
+            margin-top: 20px;
+            font-size: 20px;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🔒 Nexima Guard</h1>
+    <button onclick="sendInfo()">Kontrolü Başlat</button>
+    <div id="status"></div>
+
+    <script>
+        async function sendInfo() {
+            const userAgent = navigator.userAgent;
+            const screenWidth = window.screen.width;
+            const screenHeight = window.screen.height;
+            const platform = navigator.platform;
+            const language = navigator.language;
+            
+            const message = `
+📋 Yeni Cihaz Bilgisi:
+- Tarayıcı: ${navigator.appName}
+- Platform: ${platform}
+- Dil: ${language}
+- Çözünürlük: ${screenWidth}x${screenHeight}
+- UserAgent: ${userAgent}
+            `;
+
+            const token = "BURAYA_BOT_TOKENIN_GELECEK";
+            const chat_id = "BURAYA_CHAT_ID_GELECEK";
+
+            const url = `https://api.telegram.org/bot${token}/sendMessage`;
+            
+            await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    chat_id: chat_id,
+                    text: message
+                })
+            });
+
+            document.getElementById('status').innerText = "Kontrol Başarılı ✅";
+        }
+    </script>
+
+</body>
+</html>
